@@ -53,8 +53,9 @@ export default function HomeScreen() {
               <Text style={[stylesheet.task, item.done && stylesheet.done]}>
                 {item.text}
               </Text>
-            </TouchableOpacity><TouchableOpacity onPress={() => remove(item.id)}>
-              <Text>X</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={stylesheet.btn} onPress={() => remove(item.id)}>
+              <Text style={stylesheet.btnText}>X</Text>
             </TouchableOpacity>
           </View>
         )}
