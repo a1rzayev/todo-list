@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import { v4 } from "uuid";
 
 type Task = {
@@ -11,6 +11,7 @@ type Task = {
 export default function HomeScreen() {
   const [text, setText] = useState("");
   const [tasks, setTasks] = useState<Task[]>([]);
+
   const add = () => {
     if (!text.trim()) return;
     setTasks([...tasks, { id: v4(), text, done: false }]);
@@ -18,16 +19,28 @@ export default function HomeScreen() {
   };
 
   return (
-    <View style={stylesheet.row}>
-      <TextInput
-        value={text}
-        onChangeText={setText}
-        placeholder="New task"
-        style={stylesheet.input}
+    <View style={stylesheet.box}>
+      <View style={stylesheet.row}>
+        <TextInput
+          value={text}
+          onChangeText={setText}
+          placeholder="New task"
+          style={stylesheet.input}
+        />
+        <TouchableOpacity onPress={add} style={stylesheet.btn}>
+          <Text style={stylesheet.btnText}>+</Text>
+        </TouchableOpacity>
+      </View>
+
+      <FlatList
+        data={tasks}
+        keyExtractor={(t) => t.id}
+        renderItem={({ item }) => (
+          <View style={stylesheet.item}>
+            <Text style={stylesheet.task}>{item.text}</Text>
+          </View>
+        )}
       />
-      <TouchableOpacity onPress={add} style={stylesheet.btn}>
-        <Text style={stylesheet.btnText}>+</Text>
-      </TouchableOpacity>
     </View>
   );
 }
