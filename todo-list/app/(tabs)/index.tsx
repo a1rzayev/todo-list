@@ -26,6 +26,9 @@ export default function HomeScreen() {
   const toggle = (id: string) => {
     setTasks(tasks.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));
   };
+  const remove = (id: string) => {
+    setTasks(tasks.filter((t) => t.id !== id));
+  };
 
   return (
     <View style={stylesheet.box}>
@@ -47,7 +50,11 @@ export default function HomeScreen() {
         renderItem={({ item }) => (
           <View style={stylesheet.item}>
             <TouchableOpacity onPress={() => toggle(item.id)}>
-              <Text style={[stylesheet.task, item.done && stylesheet.done]}>{item.text}</Text>
+              <Text style={[stylesheet.task, item.done && stylesheet.done]}>
+                {item.text}
+              </Text>
+            </TouchableOpacity><TouchableOpacity onPress={() => remove(item.id)}>
+              <Text>X</Text>
             </TouchableOpacity>
           </View>
         )}
